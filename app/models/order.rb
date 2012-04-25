@@ -8,7 +8,7 @@ class Order < ActiveRecord::Base
   validates_presence_of :user, :products, :status, :if => :not_a_cart
 
   acts_as_tenant(:store)
-  
+
   before_create :generate_unique_url
 
   belongs_to :user
@@ -17,7 +17,7 @@ class Order < ActiveRecord::Base
 
   has_many :order_products
   has_many :products, :through => :order_products
-  
+
   accepts_nested_attributes_for :order_products, :allow_destroy => true
 
   def self.active

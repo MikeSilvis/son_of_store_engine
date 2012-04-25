@@ -9,7 +9,7 @@ describe "Order New" do
   end
   let!(:user) do
     FactoryGirl.create(:user, :password => "mike", :stripe_id => "cus_WyPWX06WqQhlXo")
-  end 
+  end
   let!(:products) do
     (1..4).map { FactoryGirl.create(:product, :store => store)}
   end
@@ -19,7 +19,7 @@ describe "Order New" do
       products.each do |p|
         visit product_path(p)
         click_on "Add To Cart"
-      end      
+      end
     end
     it "Address Updated with valid address" do
       visit new_order_path
@@ -34,7 +34,7 @@ describe "Order New" do
       fill_in "order[user_attributes][street]", :with => "sfsdfdsfsd"
       fill_in "order[user_attributes][zipcode]", :with => "32322343"
       click_on "Pay"
-      #save_and_open_page
+
       page.should have_content("Address is invalid")
     end
   end
