@@ -1,4 +1,5 @@
 module AuthenticationHelpers
+  
   def require_admin
     if current_user && !current_user.admin?
       flash[:alert] = "Must be an administrator"
