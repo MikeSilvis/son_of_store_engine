@@ -23,12 +23,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
-private
+  include AuthenticationHelpers
+  include CartHelpers
 
-  def not_authenticated
-    flash[:alert] = "You must login first"
-    redirect_to '/login'
-  end
+private
 
   def stripe_api_key
     Stripe.api_key = ENV['STRIPE_TOKEN'] if Rails.env.to_s == "production"
