@@ -10,6 +10,11 @@ class Notification < ActionMailer::Base
 
   def sign_up_confirmation(user)
     @user = user
-    mail(:to => user.email, :submect => "Welcome #{user.name}")
+    mail(:to => user.email, :subject => "Welcome #{user.name}")
+  end
+
+  def store_approval(user)
+    @user = user
+    mail(:to => user.email, :subject => "Store #{user.store.status}")
   end
 end
