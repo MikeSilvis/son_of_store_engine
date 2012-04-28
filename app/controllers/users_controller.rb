@@ -17,7 +17,7 @@ class UsersController < ApplicationController
       render '/sessions/new'
     end
   end
-  
+
   # Not yet needed
   # def signup_as_store_admin
   #   u = User.find_by_email(params[:email])

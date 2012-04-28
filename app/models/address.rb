@@ -8,7 +8,7 @@ class Address < ActiveRecord::Base
   validates_presence_of :state
 
   def check_address
-    validated_address = AddressChecker.validate(street, zipcode)
+    validated_address = Resque.enqueue(AddressChecker, street, zipcode)
     update_with(validated_address) if validated_address
   end
 

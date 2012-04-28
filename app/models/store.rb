@@ -6,7 +6,16 @@ class Store < ActiveRecord::Base
 
   has_many :store_roles
   has_many :users, :through => :store_roles
+  after_create :send_store_request
   STATUS = ["Declined", "Pending", "Approved"]
+
+  def send_store_request
+    Resque.enqueue(NewStoreRequestEmailer, self.id)
+  end
+
+  def send_store_approval_decision
+    Resque.enqueue(NewStoreApprovalEmailer, self.id)
+  end
 
   def status_name
     STATUS[active]
@@ -21,10 +30,10 @@ class Store < ActiveRecord::Base
   end
 
   def user
-    
+
   end
   def user_permission
-    
+
   end
 
   def approved?
@@ -79,11 +88,12 @@ class Store < ActiveRecord::Base
     if u
       users << u
       self.save
-      Notification.new_store_admin(u, self).deliver
+      Resque.enqueue(NewAdminEmailer, u.id, self.id)
     else
       # Guest ignores certain crudentials
       #users << User.create(:email => email, :guest => true)
-      Notification.new_user_and_store_admin(email, self).deliver
+      Resque.enqueue(GuestAdminEmailer, email, self.id).deliver
     end
+
   end
 end

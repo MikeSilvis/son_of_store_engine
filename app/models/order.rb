@@ -86,7 +86,7 @@ class Order < ActiveRecord::Base
 
   def charge(token=nil)
     create_user(token) unless user.stripe_id
-    BillingProcessor.charge(total_price_after_sale_in_cents, user)
+    Resque.enqueue(StripeCharge, total_price_after_sale_in_cents, user.id)
     self.status = Status.find_or_create_by_name("paid")
     self.is_cart = false
     notify_charge
@@ -94,7 +94,7 @@ class Order < ActiveRecord::Base
   end
 
   def notify_charge
-    Notification.order_email(@user, @order).deliver
+    Resque.enqueue(NewOrderEmailer, self.user, self)
     # self.user.text("Your order has been placed!
     #    You bought: #{self.products.map(&:name).join(', ')} -
     #    Total: #{self.total_price_in_dollars}")

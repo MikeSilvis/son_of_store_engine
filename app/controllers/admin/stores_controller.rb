@@ -42,7 +42,6 @@ module Admin
     def create
       @store = Store.create_store(params[:store], current_user)
       if @store.save
-        Notification.new_store_request(@store).deliver
         redirect_to admin_store_path(@store), notice: 'Store was successfully created.'
       else
         flash[:alert] = "There was an error while creating your store."
@@ -61,19 +60,19 @@ module Admin
 
     def approve
       @store.approve
-      Notification.new_store_approval(@store).deliver
+      send_store_approval_decision
       redirect_to admin_stores_path, notice: "#{@store.name} Successfully Approved"
     end
 
     def decline
       @store.decline
-      Notification.new_store_approval(@store).deliver
+      send_store_approval_decision
       redirect_to admin_stores_path, notice: "#{@store.name} Successfully Declined"
     end
 
     def enable
       @store.enable
-      Notification.new_store_approval(@store).deliver
+      send_store_approval_decision
       redirect_to admin_stores_path, notice: "#{@store.name} Successfully Enabled"
     end
 

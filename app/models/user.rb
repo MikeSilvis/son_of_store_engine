@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   default_scope :conditions => { :active => 1 }
   authenticates_with_sorcery!
 
-  validates_uniqueness_of :email, :case_sensitive => false, :unless => :guest
+  # validates_uniqueness_of :email, :case_sensitive => false, :unless => :guest
   validates_presence_of :name, :email, :unless => :guest
   validates_presence_of :password, :on => :create, :unless => :guest
   validates_format_of :phone_number,
@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   def send_confirmation_mail
     Resque.enqueue(NewUserEmailer, email)
   end
-  
+
   def verify_user(input)
     add_email(input[:email]) if input[:email]
     update_address(input)

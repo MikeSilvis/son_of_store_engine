@@ -1,5 +1,9 @@
 class BillingProcessor
   def self.charge(amount, user)
-    Resque.enqueue(StripeCharge, amount, user.id)
+    Stripe::Charge.create(
+      :amount => amount,
+      :currency => "usd",
+      :customer => user.stripe_id
+    )
   end
 end
