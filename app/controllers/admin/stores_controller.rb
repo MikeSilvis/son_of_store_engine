@@ -72,7 +72,7 @@ module Admin
 
     def enable
       @store.enable
-      send_store_approval_decision
+      @store.send_store_approval_decision
       redirect_to admin_stores_path, notice: "#{@store.name} Successfully Enabled"
     end
 
