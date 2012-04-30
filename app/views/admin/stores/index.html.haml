@@ -9,7 +9,7 @@
     %th{:colspan => 3}
   - @stores.each do |store|
     %tr{id: "store_#{store.id}"}
-      %td= store.name
+      %td= link_to store.name, "http://#{store.url}.#{request.host}"
       %td= truncate(store.description, :length => 32)
       %td= store.url
       - if store.pending?
@@ -23,7 +23,7 @@
         %td
           - if store.disabled?
             = link_to "Enable", enable_admin_store_path(store), method: :put
-          - else            
+          - else
             = link_to "Disable", disable_admin_store_path(store), method: :put
       - else
         %td

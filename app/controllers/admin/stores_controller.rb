@@ -4,7 +4,7 @@ module Admin
     before_filter :lookup_store, :only => [
                                             :show, :edit, :update,
                                             :approve, :decline,
-                                            :enable, :disable
+                                            :enable, :disable, :destroy
 
                                           ]
     before_filter :verify_store_admin, :except => [:new, :create, :index]
@@ -18,6 +18,11 @@ module Admin
     end
 
     def edit
+    end
+
+    def destroy
+      @store.destroy
+      redirect_to admin_stores_path
     end
 
     def manage
