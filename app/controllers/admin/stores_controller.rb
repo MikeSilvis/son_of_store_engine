@@ -60,13 +60,13 @@ module Admin
 
     def approve
       @store.approve
-      send_store_approval_decision
+      @store.send_store_approval_decision
       redirect_to admin_stores_path, notice: "#{@store.name} Successfully Approved"
     end
 
     def decline
       @store.decline
-      send_store_approval_decision
+      @store.send_store_approval_decision
       redirect_to admin_stores_path, notice: "#{@store.name} Successfully Declined"
     end
 

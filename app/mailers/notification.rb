@@ -12,8 +12,8 @@ class Notification < ActionMailer::Base
 
   def new_store_approval(store)
     @store = store
-    admin_user = store.users.first
-    mail(:to => admin_user.email, :subject => "New Store: #{store.name} was #{store.status}")
+    @admin_user = store.users.first
+    mail(:to => @admin_user.email, :subject => "New Store: #{store.name} was #{store.status}")
   end
 
   def new_store_request(store)
