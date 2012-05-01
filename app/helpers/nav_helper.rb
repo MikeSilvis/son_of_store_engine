@@ -17,18 +17,18 @@ module NavHelper
   end
 
   def nav_array_home_user
-    { 
+    {
       "Welcome!" => root_path,
-      "Profile" => profile_path,      
+      "Profile" => profile_path,
       "Logout" => logout_path,
-    }  
+    }
   end
 
   def nav_array_home_guest
-    { 
+    {
       "Welcome!" => root_path,
       "Login or Signup" => login_path
-    }  
+    }
   end
 
   def nav_array_admin
@@ -39,6 +39,7 @@ module NavHelper
       "Dashboard" => admin_dashboard_path,
       "My Orders" => my_orders_orders_path,
       "Logout" => logout_path
+      # "Polutropon Dashboard" => "admin_stores_path"
     }
   end
 

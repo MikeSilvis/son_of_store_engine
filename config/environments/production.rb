@@ -1,4 +1,6 @@
 StoreEngine::Application.configure do
+  config.cache_store = :redis_store, "redis://redistogo:5c89ed218d04538e883296814b4a08f6@drum.redistogo.com:9640/"
+
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests
@@ -7,7 +9,7 @@ StoreEngine::Application.configure do
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-  
+
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
 
@@ -77,5 +79,5 @@ ActionMailer::Base.smtp_settings = {
     :password       => "86gskmjs",
     :domain         => 'heroku.com'
   }
-  ActionMailer::Base.delivery_method = :smtp  
+  ActionMailer::Base.delivery_method = :smtp
 end

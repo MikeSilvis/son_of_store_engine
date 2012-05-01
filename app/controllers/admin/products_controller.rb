@@ -1,6 +1,8 @@
 # Restful actions for products
 module Admin
   class ProductsController < Controller
+    # caches_page :index, :show
+    # cache_sweeper :product_sweeper
 
     include ProductsActions
 
